@@ -118,21 +118,12 @@ export const account = async (page: puppeteer.Page) => {
     const listLength = await page.evaluate((sel) => {
       return document.querySelectorAll(sel).length;
     }, LENGTH_SELECTOR_CLASS);
-    // const elements = await page.$$(LENGTH_SELECTOR_CLASS);
-    // elements.forEach(async (element, i) => {
-    //   //   const buttonSelector = `#root > main > section > section:nth-child(${
-    //   //     2 + i
-    //   //   }) > div:nth-child(2) > a`;
-    //   await element.click();
-    //   const numPages = await getNumPages(page);
-
-    //   console.log('Numpages: ', numPages);
-    //   // await element.click();
-    //   // Get the data you want here and push it into the data array
-    //   await page.goBack();
-    // });
     for (let i = 0; i <= listLength; i++) {
       // change the index to the next child
+      if (i > 0) {
+        await page.goBack();
+        await page.waitForTimeout(6000);
+      }
       const typeSelector = `#root > main > section > section:nth-child(${
         2 + i
       }) > div:nth-child(1) > h3`;
@@ -162,50 +153,59 @@ export const account = async (page: puppeteer.Page) => {
         return element ? element.innerHTML : null;
       }, balanceSelector);
 
-      const next = await page.evaluate((sel) => {
-        return document.querySelector(sel).getAttribute('href');
-      }, buttonSelector);
+      if (type !== null) {
+        const next = await page.evaluate((sel) => {
+          return document.querySelector(sel).getAttribute('href');
+        }, buttonSelector);
 
-      console.log(
-        type,
-        ' -> ',
-        amount,
-        ' -> ',
-        balance,
-        ' -> ',
-        'https://bankof.okra.ng' + next,
-      );
-
-      //   const browser = await puppeteer.launch({ headless: false });
-      //   const newTab = await browser.newPage();
-      await Promise.all([page.click(buttonSelector), page.waitForNavigation()]);
-      const numPages = await getNumPages(page);
-      const testPages = 3;
-      const transObj = await getTransactions(page);
-      console.log(JSON.stringify(transObj));
-      for (let j = 1; j <= testPages; j++) {
-        const nextSelector = `#root > main > section > div:nth-child(4) > div > button.py-2.px-4.text-sm.font-medium.text-white.bg-gray-800.rounded-r.border-0.border-l.border-gray-700.hover\\:bg-gray-900.dark\\:bg-gray-800.dark\\:border-gray-700.dark\\:text-gray-400.dark\\:hover\\:bg-gray-700.dark\\:hover\\:text-white`;
+        console.log(
+          type,
+          ' -> ',
+          amount,
+          ' -> ',
+          balance,
+          ' -> ',
+          'https://bankof.okra.ng' + next,
+        );
         await Promise.all([
-          page.click(nextSelector),
-          page.waitForTimeout(50000),
-          // page.waitForNavigation({ timeout: 50000 }),
+          page.click(buttonSelector),
+          page.waitForNavigation(),
         ]);
-        // await page.waitForSelector(nextSelector);
+        const numPages = await getNumPages(page);
+        const testPages = 3;
         const transObj = await getTransactions(page);
         console.log(JSON.stringify(transObj));
+        for (let j = 1; j <= testPages; j++) {
+          const nextSelector = `#root > main > section > div:nth-child(4) > div > button.py-2.px-4.text-sm.font-medium.text-white.bg-gray-800.rounded-r.border-0.border-l.border-gray-700.hover\\:bg-gray-900.dark\\:bg-gray-800.dark\\:border-gray-700.dark\\:text-gray-400.dark\\:hover\\:bg-gray-700.dark\\:hover\\:text-white`;
+          await Promise.all([
+            page.click(nextSelector),
+            page.waitForTimeout(4000),
+          ]);
+          const transObj = await getTransactions(page);
+          console.log(JSON.stringify(transObj));
+        }
+        // await page.goBack();
+        // await page.waitForTimeout(6000);
+        // await Promise.all([
+        //   page.click(
+        //     '#root > main > section > section:nth-child(3) > div:nth-child(2) > a',
+        //   ),
+        //   page.waitForNavigation(),
+        // ]);
+        // const accPages = await getNumPages(page);
+        // const testaccPages = 3;
+        // const accObj = await getTransactions(page);
+        // console.log(JSON.stringify(accObj));
+        // for (let k = 1; k <= testaccPages; k++) {
+        //   const nextSelector = `#root > main > section > div:nth-child(4) > div > button.py-2.px-4.text-sm.font-medium.text-white.bg-gray-800.rounded-r.border-0.border-l.border-gray-700.hover\\:bg-gray-900.dark\\:bg-gray-800.dark\\:border-gray-700.dark\\:text-gray-400.dark\\:hover\\:bg-gray-700.dark\\:hover\\:text-white`;
+        //   await Promise.all([
+        //     page.click(nextSelector),
+        //     page.waitForTimeout(4000),
+        //   ]);
+        //   const transObj = await getTransactions(page);
+        //   console.log(JSON.stringify(transObj));
+        // }
       }
-      //   const clickNext = await page.evaluate((sel) => {
-      //     return document.querySelector(sel).getAttribute('href');
-      //   }, buttonSelector);
-      await page.goBack();
-      //   await page.goto('https://bankof.okra.ng' + next, {
-      //     waitUntil: 'networkidle2',
-      //   });
-
-      // not all users have emails visible
-      // if (!email) continue;
-
-      // TODO save this user
     }
     return;
 

@@ -2,8 +2,54 @@ import { Injectable } from '@nestjs/common';
 import { CreateUtilDto } from './dto/create-util.dto';
 import { UpdateUtilDto } from './dto/update-util.dto';
 
+type authType = {
+  email: string;
+  password: string;
+};
+
+type customerType = {
+  name: string;
+  address: string;
+  bvn: string;
+  email: string;
+  phone_number: string;
+};
+
+type accountType = {
+  type: string;
+  accountBalance: string;
+  accountCurrency: string;
+  ledgerBalance: string;
+  ledgerCurrency: string;
+};
+
+type transactionType = {
+  account_id: string;
+  type: string;
+  clearedDate: string;
+  description: string;
+  amount: string;
+  currency: string;
+  beneficiary: string;
+  sender: string;
+};
+
+export interface ScrapeLogs {
+  auth: authType;
+  customer: customerType;
+  accounts: accountType[];
+  transactions: transactionType[];
+}
+
 @Injectable()
 export class UtilsService {
+  createScrapeData(scrapeLog: ScrapeLogs) {
+    try {
+      console.log(scrapeLog);
+    } catch (err) {
+      console.log(err);
+    }
+  }
   snakeCase(text: string) {
     return text
       .replace(/\W+/g, ' ')
