@@ -11,6 +11,13 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import {
+  ApiBody,
+  ApiHeader,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { PrincipalGuard } from 'src/users/guards/principal.guard';
 import { AuthsService } from './auth.service';
 import { UpdateAuthDto } from './dto/update-auth.dto';
@@ -22,6 +29,22 @@ export class AuthsController {
   constructor(private readonly authsService: AuthsService) {}
 
   // @UseGuards(PrincipalGuard)
+  //   @ApiOperation({
+  //     summary: 'Start Auth Process',
+  //     description: 'Start Auth Process',
+  //   })
+  //   @ApiBody({
+  //     description: 'Request Body',
+  //     type: CreateAuthDto,
+  //   })
+  //   @ApiResponse({
+  //     status: 200,
+  //   })
+  //   @ApiHeader({
+  //     name: 'x-access-token',
+  //     description: 'Super Admin JWT',
+  //     required: true,
+  //   })
   @Post()
   // @UsePipes(new ValidationPipe())
   async createAuth(@Body() createAuth: CreateAuthDto, @Request() req) {

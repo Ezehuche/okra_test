@@ -16,12 +16,11 @@ export class AuthsService {
   ) {}
   async create(createAuth: CreateAuthDto) {
     try {
-      const { email, user_id: user, password } = createAuth;
+      // const { email, user_id: user, password } = createAuth;
+      const { cookies } = createAuth;
 
-      const customer = await this.authModel
-        .findOne({ email: email.toLowerCase(), user })
-        .exec();
-      if (customer) throw new NotFoundException('User already exists');
+      const auth = await this.authModel.findOne({ cookies }).exec();
+      if (auth) throw new NotFoundException('Cookie already exists');
 
       const createdAuth = new this.authModel({
         code: `auth_${randomstring.generate({
@@ -29,8 +28,7 @@ export class AuthsService {
           capitalization: 'lowercase',
           charset: 'alphanumeric',
         })}`,
-        email,
-        user,
+        cookies,
       });
       await createdAuth.save();
 

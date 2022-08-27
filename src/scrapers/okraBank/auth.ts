@@ -1,6 +1,7 @@
 import puppeteer from 'puppeteer';
 import { sleepFor } from '../wait';
 import { customer } from './customer';
+import { account } from './account';
 
 export const auth = async () => {
   try {
@@ -8,14 +9,25 @@ export const auth = async () => {
     const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
     const URL = `${url}/login`;
-    await page.setViewport({
-      width: 1280,
-      height: 800,
-      deviceScaleFactor: 1,
-    });
+    // await page.setViewport({
+    //   width: 1280,
+    //   height: 800,
+    //   deviceScaleFactor: 1,
+    // });
 
     await page.goto(URL, { waitUntil: 'networkidle2' });
     await sleepFor(page, 1000, 2000);
+    // let email: string | any[] | HTMLElement;
+    // let password: string | any[] | HTMLElement;
+
+    // await page.waitForFunction(() => {
+    //   email = document.querySelector('#email').innerHTML;
+    //   password = document.querySelector('#password').innerHTML;
+
+    //   console.log(email);
+
+    //   return email.length !== 0 && password.length !== 0;
+    // });
     await page.waitForNavigation();
     const OTP_SELECTOR = '#otp';
     const BUTTON_SELECTOR = '#root > main > section > form > button';
@@ -30,6 +42,7 @@ export const auth = async () => {
       ...cookies,
     };
     const customer_details = await customer(page);
+    await account(page);
 
     return auth;
   } catch (err) {
