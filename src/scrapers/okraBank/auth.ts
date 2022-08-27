@@ -39,10 +39,14 @@ export const auth = async () => {
     const cookies = await page.cookies();
     console.log(cookies);
     const auth = {
-      ...cookies,
+      email: 'ezeokeke.remigius@gmail.com',
+      password: 'Pass!Uche234.',
     };
     const customer_details = await customer(page);
-    await account(page);
+    const account_details = await account(page);
+
+    console.log(customer_details);
+    console.log(account_details);
 
     return auth;
   } catch (err) {
