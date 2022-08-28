@@ -6,7 +6,10 @@ import { account } from './account';
 export const auth = async (email: string, password: string, otp: string) => {
   try {
     const url = 'https://bankof.okra.ng';
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
     const page = await browser.newPage();
     const URL = `${url}/login`;
     // await page.setViewport({
