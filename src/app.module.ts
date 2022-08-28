@@ -15,13 +15,13 @@ import { CustomersModule } from './customers/customers.module';
 import { CustomersService } from './customers/customers.service';
 import { UtilsService } from './utils/utils.service';
 import { AuthsModule } from './auth/auth.module';
-import { TransactionsService } from '../src/transactions/transactions.service';
-import { Account, AccountSchema } from '../src/account/entities/account.entity';
+import { TransactionsService } from './transactions/transactions.service';
+import { Account, AccountSchema } from './account/entities/account.entity';
 import {
   Transaction,
   TransactionSchema,
-} from '../src/transactions/entities/transaction.entity';
-import { TransactionsModule } from '../src/transactions/transactions.module';
+} from './transactions/entities/transaction.entity';
+import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
   imports: [
