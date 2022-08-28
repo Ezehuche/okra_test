@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer';
 import mongoose from 'mongoose';
 import * as randomstring from 'randomstring';
-import { FormatterService } from 'src/formatter/formatter.service';
+import { FormatterService } from '../../formatter/formatter.service';
 import { sleepFor } from '../wait';
 
 const getNumPages = async (page: puppeteer.Page) => {

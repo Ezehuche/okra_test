@@ -1,4 +1,4 @@
-import { auth } from 'src/scrapers/okraBank/auth';
+import { auth } from '../scrapers/okraBank/auth';
 
 export const okraBank = async (
   email: string,

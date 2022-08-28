@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UtilsService } from 'src/utils/utils.service';
+import { UtilsService } from '../utils/utils.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { Customer, CustomerDocument } from './entities/customer.entity';
 import * as randomstring from 'randomstring';

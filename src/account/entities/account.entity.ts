@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
-import { User } from 'src/users/entities/user.entity';
-import { Customer } from 'src/customers/entities/customer.entity';
+import { User } from '../../users/entities/user.entity';
+import { Customer } from '../../customers/entities/customer.entity';
 
 export type AccountDocument = Account & Document;
 

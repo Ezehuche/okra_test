@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CustomersService } from './customers.service';
-import { PrincipalGuard } from 'src/users/guards/principal.guard';
+import { PrincipalGuard } from '../users/guards/principal.guard';
 
 @Controller('customer')
 export class CustomersController {

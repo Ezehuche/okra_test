@@ -8,14 +8,14 @@ import { JwtModule } from '@nestjs/jwt';
 import { JWT_SECRET } from '../config/env.config';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
-import { UtilsService } from 'src/utils/utils.service';
-import { AccountsService } from 'src/account/accounts.service';
-import { TransactionsService } from 'src/transactions/transactions.service';
-import { Account, AccountSchema } from 'src/account/entities/account.entity';
+import { UtilsService } from '../utils/utils.service';
+import { AccountsService } from '../account/accounts.service';
+import { TransactionsService } from '../transactions/transactions.service';
+import { Account, AccountSchema } from '../account/entities/account.entity';
 import {
   Transaction,
   TransactionSchema,
-} from 'src/transactions/entities/transaction.entity';
+} from '../transactions/entities/transaction.entity';
 
 @Module({
   imports: [

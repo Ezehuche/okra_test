@@ -15,8 +15,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { TransactionsService } from './transactions.service';
-import { PrincipalGuard } from 'src/users/guards/principal.guard';
-import { PageRequest } from 'src/page/page.request';
+import { PrincipalGuard } from '../users/guards/principal.guard';
+import { PageRequest } from '../page/page.request';
 
 @Controller('transactions')
 export class TransactionsController {

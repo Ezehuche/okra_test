@@ -7,7 +7,7 @@ import {
   TransactionDocument,
 } from './entities/transaction.entity';
 import * as randomstring from 'randomstring';
-import { PageRequest } from 'src/page/page.request';
+import { PageRequest } from '../page/page.request';
 
 @Injectable()
 export class TransactionsService {

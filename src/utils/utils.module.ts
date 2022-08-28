@@ -3,18 +3,18 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UtilsService } from './utils.service';
 import { UtilsController } from './utils.controller';
 
-import { CustomersService } from 'src/customers/customers.service';
-import { AccountsService } from 'src/account/accounts.service';
-import { TransactionsService } from 'src/transactions/transactions.service';
-import { Account, AccountSchema } from 'src/account/entities/account.entity';
+import { CustomersService } from '../customers/customers.service';
+import { AccountsService } from '../account/accounts.service';
+import { TransactionsService } from '../transactions/transactions.service';
+import { Account, AccountSchema } from '../account/entities/account.entity';
 import {
   Customer,
   CustomerSchema,
-} from 'src/customers/entities/customer.entity';
+} from '../customers/entities/customer.entity';
 import {
   Transaction,
   TransactionSchema,
-} from 'src/transactions/entities/transaction.entity';
+} from '../transactions/entities/transaction.entity';
 
 @Module({
   imports: [

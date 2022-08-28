@@ -1,12 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UtilsService } from 'src/utils/utils.service';
+import { UtilsService } from '../utils/utils.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 // import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { Auth, AuthDocument } from './entities/auth.entity';
 import * as randomstring from 'randomstring';
-import { UpdateAuthDto } from './dto/update-auth.dto';
 
 @Injectable()
 export class AuthsService {

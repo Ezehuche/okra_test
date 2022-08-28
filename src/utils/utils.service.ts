@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUtilDto } from './dto/create-util.dto';
 import { UpdateUtilDto } from './dto/update-util.dto';
-import { CustomersService } from 'src/customers/customers.service';
-import { AccountsService } from 'src/account/accounts.service';
-import { TransactionsService } from 'src/transactions/transactions.service';
+import { AccountsService } from '../account/accounts.service';
+import { TransactionsService } from '../transactions/transactions.service';
 
 type authType = {
   email: string;

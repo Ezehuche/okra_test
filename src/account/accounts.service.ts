@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { Account, AccountDocument } from './entities/account.entity';
 import * as randomstring from 'randomstring';
-import { PageRequest } from 'src/page/page.request';
+import { PageRequest } from '../page/page.request';
 
 @Injectable()
 export class AccountsService {

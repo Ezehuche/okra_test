@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer';
-import { FormatterService } from 'src/formatter/formatter.service';
+import { FormatterService } from '../../formatter/formatter.service';
 import { sleepFor } from '../wait';
 
 export const customer = async (page: puppeteer.Page) => {

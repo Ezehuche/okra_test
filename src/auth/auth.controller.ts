@@ -19,13 +19,13 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { PrincipalGuard } from 'src/users/guards/principal.guard';
+import { PrincipalGuard } from '../users/guards/principal.guard';
 import { AuthsService } from './auth.service';
-import { AccountsService } from 'src/account/accounts.service';
-import { CustomersService } from 'src/customers/customers.service';
-import { TransactionsService } from 'src/transactions/transactions.service';
+import { AccountsService } from '../account/accounts.service';
+import { CustomersService } from '../customers/customers.service';
+import { TransactionsService } from '../transactions/transactions.service';
 import { AuthDto } from './dto/create-auth.dto';
-import { okraBank } from 'src/scrapers';
+import { okraBank } from '../scrapers';
 
 @Controller('auths')
 export class AuthsController {
