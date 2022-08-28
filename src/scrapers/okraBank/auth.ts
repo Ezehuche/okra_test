@@ -12,11 +12,6 @@ export const auth = async (email: string, password: string, otp: string) => {
     });
     const page = await browser.newPage();
     const URL = `${url}/login`;
-    // await page.setViewport({
-    //   width: 1280,
-    //   height: 800,
-    //   deviceScaleFactor: 1,
-    // });
     page.on('dialog', async (dialog) => {
       console.log('here');
       await dialog.accept();
