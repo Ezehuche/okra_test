@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "description": "Okra Test",
   "license": "MIT",
+  "engines": {
+    "node": "16.15.0"
+  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
