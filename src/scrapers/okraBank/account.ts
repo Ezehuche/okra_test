@@ -120,6 +120,12 @@ export const account = async (page: puppeteer.Page) => {
         await page.goBack();
         await page.waitForTimeout(6000);
       }
+      if (i === 2) {
+        await Promise.all([
+          page.click('#root > nav > div > a:nth-child(2)'),
+          page.waitForNavigation({ waitUntil: 'networkidle0' }),
+        ]);
+      }
       const typeSelector = `#root > main > section > section:nth-child(${
         2 + i
       }) > div:nth-child(1) > h3`;
@@ -198,7 +204,7 @@ export const account = async (page: puppeteer.Page) => {
         console.log(JSON.stringify(transObj));
         transactionArr.push(...transObj);
         // console.log(JSON.stringify(transObj));
-        for (let j = 1; j <= testPages; j++) {
+        for (let j = 1; j <= numPages; j++) {
           const nextSelector = `#root > main > section > div:nth-child(4) > div > button.py-2.px-4.text-sm.font-medium.text-white.bg-gray-800.rounded-r.border-0.border-l.border-gray-700.hover\\:bg-gray-900.dark\\:bg-gray-800.dark\\:border-gray-700.dark\\:text-gray-400.dark\\:hover\\:bg-gray-700.dark\\:hover\\:text-white`;
           await Promise.all([
             page.click(nextSelector),

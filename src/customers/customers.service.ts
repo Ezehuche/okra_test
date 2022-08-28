@@ -24,9 +24,9 @@ export class CustomersService {
       } = createCustomer;
 
       // const customer = await this.customerModel
-      //   .findOne({ email: email.toLowerCase(), user })
+      //   .findOne({ user })
       //   .exec();
-      // if (customer) throw new NotFoundException('User already exists');
+      // if (customer) throw new NotFoundException('Customer already exists');
 
       const createdCustomer = new this.customerModel({
         code: `cus_${randomstring.generate({
