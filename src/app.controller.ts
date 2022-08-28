@@ -21,6 +21,7 @@ export class AppController {
     return this.appService.getHello();
   }
   @Post('register')
+  @ApiExcludeEndpoint()
   @ApiBody({
     type: UserDto,
   })
@@ -30,6 +31,7 @@ export class AppController {
   }
 
   @Post('login')
+  @ApiExcludeEndpoint()
   @ApiBody({
     type: loginUserDto,
   })

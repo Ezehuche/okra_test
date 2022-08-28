@@ -1,12 +1,6 @@
 import {
   Controller,
-  Get,
   Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  UseGuards,
   Request,
   UsePipes,
   ValidationPipe,
@@ -14,12 +8,9 @@ import {
 import {
   ApiBearerAuth,
   ApiBody,
-  ApiHeader,
   ApiOperation,
   ApiResponse,
-  ApiTags,
 } from '@nestjs/swagger';
-import { PrincipalGuard } from '../users/guards/principal.guard';
 import { AuthsService } from './auth.service';
 import { AccountsService } from '../account/accounts.service';
 import { CustomersService } from '../customers/customers.service';
@@ -36,9 +27,7 @@ export class AuthsController {
     private readonly transactionsService: TransactionsService,
   ) {}
 
-  @UseGuards(PrincipalGuard)
   @Post('getStarted')
-  @ApiBearerAuth('defaultBearerAuth')
   @ApiBody({
     type: AuthDto,
   })
@@ -58,18 +47,18 @@ export class AuthsController {
       req.body.password,
       req.body.otp,
     );
-    const payload = { ...scrapedData.auth, user_id: req.user.userId };
-    await this.authsService.create(payload);
+    const payload = { ...scrapedData.auth, otp: req.body.otp };
+    const authObj = await this.authsService.create(payload);
     const customerPayload = {
       ...scrapedData.customer_details,
-      user_id: req.user.userId,
+      auth_id: authObj._id,
     };
     const customerObj = await this.customersService.create(customerPayload);
     const acctArr = scrapedData.account_details.accountArr;
     acctArr.map(async (acct) => {
       const acctPayload = {
         ...acct,
-        user_id: req.user.userId,
+        auth_id: authObj._id,
         customer_id: customerObj._id,
       };
       await this.accountsService.create(acctPayload);
@@ -78,7 +67,7 @@ export class AuthsController {
     transArr.map(async (trans) => {
       const transPayload = {
         ...trans,
-        user_id: req.user.userId,
+        auth_id: authObj._id,
         customer_id: customerObj._id,
       };
       await this.transactionsService.create(transPayload);

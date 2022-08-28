@@ -1,17 +1,17 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
-import { User } from '../../users/entities/user.entity';
+import { AuthUche } from '../../auth/entities/auth.entity';
 
-export type CustomerDocument = Customer & Document;
+export type CustomerDocument = CustomerUche & Document;
 
 @Schema({ timestamps: true })
-export class Customer {
+export class CustomerUche {
   @Prop({ required: true })
   code: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  user: User;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'AuthUche' })
+  auth: AuthUche;
 
   @Prop({ required: true })
   name: string;
@@ -29,4 +29,4 @@ export class Customer {
   phone_number: string;
 }
 
-export const CustomerSchema = SchemaFactory.createForClass(Customer);
+export const CustomerSchema = SchemaFactory.createForClass(CustomerUche);

@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import {
-  Transaction,
+  TransactionUche,
   TransactionDocument,
 } from './entities/transaction.entity';
 import * as randomstring from 'randomstring';
@@ -12,14 +12,14 @@ import { PageRequest } from '../page/page.request';
 @Injectable()
 export class TransactionsService {
   constructor(
-    @InjectModel(Transaction.name)
+    @InjectModel(TransactionUche.name)
     private transactionModel: Model<TransactionDocument>,
   ) {}
   async create(createTransaction: CreateTransactionDto) {
     try {
       const {
         type,
-        user_id: user,
+        auth_id: auth,
         customer_id: customer,
         account_id: account,
         clearedDate,
@@ -48,7 +48,7 @@ export class TransactionsService {
         currency,
         beneficiary,
         sender,
-        user,
+        auth,
         customer,
       });
       await createdTransaction.save();

@@ -4,15 +4,16 @@ import { IsString } from 'class-validator';
 
 export class CreateAuthDto {
   @IsNotEmpty()
-  user_id: string;
-
-  @IsOptional()
   @IsString()
   email: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
   password: string;
+
+  @IsNotEmpty()
+  @IsString()
+  otp: string;
 }
 
 export class AuthDto {

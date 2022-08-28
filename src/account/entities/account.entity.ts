@@ -1,21 +1,21 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
-import { User } from '../../users/entities/user.entity';
-import { Customer } from '../../customers/entities/customer.entity';
+import { AuthUche } from '../../auth/entities/auth.entity';
+import { CustomerUche } from '../../customers/entities/customer.entity';
 
-export type AccountDocument = Account & Document;
+export type AccountDocument = AccountUche & Document;
 
 @Schema({ timestamps: true })
-export class Account {
+export class AccountUche {
   @Prop({ required: true })
   code: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  user: User;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'AuthUche' })
+  auth: AuthUche;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Customer' })
-  customer: Customer;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'CustomerUche' })
+  customer: CustomerUche;
 
   @Prop({ required: true })
   type: string;
@@ -24,13 +24,10 @@ export class Account {
   accountBalance: string;
 
   @Prop({ required: true })
-  accountCurrency: string;
+  currency: string;
 
   @Prop({ type: mongoose.Schema.Types.Decimal128, required: true })
   ledgerBalance: string;
-
-  @Prop()
-  ledgerCurrency: string;
 }
 
-export const AccountSchema = SchemaFactory.createForClass(Account);
+export const AccountSchema = SchemaFactory.createForClass(AccountUche);

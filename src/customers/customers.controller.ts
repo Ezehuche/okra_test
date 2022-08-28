@@ -13,9 +13,7 @@ import { PrincipalGuard } from '../users/guards/principal.guard';
 export class CustomersController {
   constructor(private readonly customersService: CustomersService) {}
 
-  @UseGuards(PrincipalGuard)
   @Get('')
-  @ApiBearerAuth('defaultBearerAuth')
   @ApiOperation({
     summary: 'Get the customer data',
   })

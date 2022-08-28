@@ -2,7 +2,7 @@ import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateAccountDto {
   @IsNotEmpty()
-  user_id: string;
+  auth_id: string;
 
   @IsNotEmpty()
   customer_id: string;
@@ -14,13 +14,10 @@ export class CreateAccountDto {
   accountBalance: string;
 
   @IsNotEmpty()
-  accountCurrency: string;
+  currency: string;
 
   @IsNotEmpty()
   ledgerBalance: string;
-
-  @IsOptional()
-  ledgerCurrency: string;
 
   @IsNotEmpty()
   @IsString()

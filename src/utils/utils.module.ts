@@ -6,13 +6,13 @@ import { UtilsController } from './utils.controller';
 import { CustomersService } from '../customers/customers.service';
 import { AccountsService } from '../account/accounts.service';
 import { TransactionsService } from '../transactions/transactions.service';
-import { Account, AccountSchema } from '../account/entities/account.entity';
+import { AccountUche, AccountSchema } from '../account/entities/account.entity';
 import {
-  Customer,
+  CustomerUche,
   CustomerSchema,
 } from '../customers/entities/customer.entity';
 import {
-  Transaction,
+  TransactionUche,
   TransactionSchema,
 } from '../transactions/entities/transaction.entity';
 
@@ -20,9 +20,9 @@ import {
   imports: [
     // eslint-disable-next-line prettier/prettier
     MongooseModule.forFeature([
-      { name: Transaction.name, schema: TransactionSchema },
-      { name: Account.name, schema: AccountSchema },
-      { name: Customer.name, schema: CustomerSchema },
+      { name: TransactionUche.name, schema: TransactionSchema },
+      { name: AccountUche.name, schema: AccountSchema },
+      { name: CustomerUche.name, schema: CustomerSchema },
     ]),
   ],
   controllers: [UtilsController],

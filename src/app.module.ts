@@ -16,9 +16,9 @@ import { CustomersService } from './customers/customers.service';
 import { UtilsService } from './utils/utils.service';
 import { AuthsModule } from './auth/auth.module';
 import { TransactionsService } from './transactions/transactions.service';
-import { Account, AccountSchema } from './account/entities/account.entity';
+import { AccountUche, AccountSchema } from './account/entities/account.entity';
 import {
-  Transaction,
+  TransactionUche,
   TransactionSchema,
 } from './transactions/entities/transaction.entity';
 import { TransactionsModule } from './transactions/transactions.module';
@@ -30,8 +30,8 @@ import { TransactionsModule } from './transactions/transactions.module';
     MongooseModule.forRoot(MONGO_URL),
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema },
-      { name: Account.name, schema: AccountSchema },
-      { name: Transaction.name, schema: TransactionSchema },
+      { name: AccountUche.name, schema: AccountSchema },
+      { name: TransactionUche.name, schema: TransactionSchema },
     ]),
     JwtModule.register({
       secret: JWT_SECRET,

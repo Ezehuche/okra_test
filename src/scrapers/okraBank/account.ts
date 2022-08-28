@@ -186,11 +186,8 @@ export const account = async (page: puppeteer.Page) => {
           _id,
           type,
           accountBalance: new FormatterService().getPrice(amount),
-          accountCurrency: new FormatterService().getCurrencySymbol(amount),
+          currency: new FormatterService().getCurrencySymbol(amount),
           ledgerBalance: new FormatterService().getPrice(fromattedBal),
-          ledgerCurrency: new FormatterService().getCurrencySymbol(
-            fromattedBal,
-          ),
         };
         console.log(accObj);
         accountArr.push(accObj);

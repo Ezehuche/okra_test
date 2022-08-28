@@ -4,14 +4,14 @@ import { UtilsService } from '../utils/utils.service';
 import { CustomersService } from '../customers/customers.service';
 import { AccountsService } from '../account/accounts.service';
 import { TransactionsService } from '../transactions/transactions.service';
-import { Auth, AuthSchema } from './entities/auth.entity';
-import { Account, AccountSchema } from '../account/entities/account.entity';
+import { AuthUche, AuthSchema } from './entities/auth.entity';
+import { AccountUche, AccountSchema } from '../account/entities/account.entity';
 import {
-  Transaction,
+  TransactionUche,
   TransactionSchema,
 } from '../transactions/entities/transaction.entity';
 import {
-  Customer,
+  CustomerUche,
   CustomerSchema,
 } from '../customers/entities/customer.entity';
 import { AuthsService } from './auth.service';
@@ -20,10 +20,10 @@ import { AuthsController } from './auth.controller';
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: Auth.name, schema: AuthSchema },
-      { name: Customer.name, schema: CustomerSchema },
-      { name: Account.name, schema: AccountSchema },
-      { name: Transaction.name, schema: TransactionSchema },
+      { name: AuthUche.name, schema: AuthSchema },
+      { name: CustomerUche.name, schema: CustomerSchema },
+      { name: AccountUche.name, schema: AccountSchema },
+      { name: TransactionUche.name, schema: TransactionSchema },
     ]),
   ],
   controllers: [AuthsController],

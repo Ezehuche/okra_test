@@ -23,9 +23,8 @@ type accountType = {
   _id: string;
   type: string;
   accountBalance: string;
-  accountCurrency: string;
+  currency: string;
   ledgerBalance: string;
-  ledgerCurrency: string;
 };
 
 type transactionType = {
@@ -53,18 +52,6 @@ export class UtilsService {
     // private customers: CustomersService,
     private transactions: TransactionsService,
   ) {}
-  async createScrapeData(scrapeLog: ScrapeLogs) {
-    try {
-      // const customer = await this.customers.create(scrapeLog.customer);
-      const account = await this.accounts.create(scrapeLog.accounts);
-      // if (customer) {
-      //   const account = await this.accounts.create(scrapeLog.accounts);
-      // }
-      console.log(scrapeLog);
-    } catch (err) {
-      console.log(err);
-    }
-  }
   snakeCase(text: string) {
     return text
       .replace(/\W+/g, ' ')

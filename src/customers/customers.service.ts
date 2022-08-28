@@ -3,20 +3,21 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UtilsService } from '../utils/utils.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
-import { Customer, CustomerDocument } from './entities/customer.entity';
+import { CustomerUche, CustomerDocument } from './entities/customer.entity';
 import * as randomstring from 'randomstring';
 
 @Injectable()
 export class CustomersService {
   constructor(
-    @InjectModel(Customer.name) private customerModel: Model<CustomerDocument>,
+    @InjectModel(CustomerUche.name)
+    private customerModel: Model<CustomerDocument>,
     private utils: UtilsService,
   ) {}
   async create(createCustomer: CreateCustomerDto) {
     try {
       const {
         email,
-        user_id: user,
+        auth_id: auth,
         phone_number,
         name,
         address,
@@ -39,7 +40,7 @@ export class CustomersService {
         address,
         phone_number,
         bvn,
-        user,
+        auth,
       });
       await createdCustomer.save();
 

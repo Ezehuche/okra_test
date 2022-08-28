@@ -11,9 +11,9 @@ import { JwtStrategy } from './jwt.strategy';
 import { UtilsService } from '../utils/utils.service';
 import { AccountsService } from '../account/accounts.service';
 import { TransactionsService } from '../transactions/transactions.service';
-import { Account, AccountSchema } from '../account/entities/account.entity';
+import { AccountUche, AccountSchema } from '../account/entities/account.entity';
 import {
-  Transaction,
+  TransactionUche,
   TransactionSchema,
 } from '../transactions/entities/transaction.entity';
 
@@ -22,8 +22,8 @@ import {
     // eslint-disable-next-line prettier/prettier
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema },
-      { name: Account.name, schema: AccountSchema },
-      { name: Transaction.name, schema: TransactionSchema },
+      { name: AccountUche.name, schema: AccountSchema },
+      { name: TransactionUche.name, schema: TransactionSchema },
     ]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({

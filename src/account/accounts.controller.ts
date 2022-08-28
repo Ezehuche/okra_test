@@ -26,9 +26,7 @@ import { PageRequest } from '../page/page.request';
 export class AccountsController {
   constructor(private readonly accountsService: AccountsService) {}
 
-  @UseGuards(PrincipalGuard)
   @Get('customer/:customerId')
-  @ApiBearerAuth('defaultBearerAuth')
   @ApiQuery({
     name: 'pageNo',
     required: false,
@@ -56,9 +54,7 @@ export class AccountsController {
     return this.accountsService.findByCustomer(customer_id, pageRequest);
   }
 
-  @UseGuards(PrincipalGuard)
   @Get(':id')
-  @ApiBearerAuth('defaultBearerAuth')
   @ApiOperation({
     summary: 'Get an account by Id',
   })
@@ -71,9 +67,7 @@ export class AccountsController {
     return this.accountsService.findOne(id);
   }
 
-  @UseGuards(PrincipalGuard)
   @Get('')
-  @ApiBearerAuth('defaultBearerAuth')
   @ApiQuery({
     name: 'pageNo',
     required: false,

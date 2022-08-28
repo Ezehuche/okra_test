@@ -2,25 +2,24 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateAccountDto } from './dto/create-account.dto';
-import { Account, AccountDocument } from './entities/account.entity';
+import { AccountUche, AccountDocument } from './entities/account.entity';
 import * as randomstring from 'randomstring';
 import { PageRequest } from '../page/page.request';
 
 @Injectable()
 export class AccountsService {
   constructor(
-    @InjectModel(Account.name) private accountModel: Model<AccountDocument>,
+    @InjectModel(AccountUche.name) private accountModel: Model<AccountDocument>,
   ) {}
   async create(createAccount: CreateAccountDto) {
     try {
       const {
         type,
-        user_id: user,
+        auth_id: auth,
         customer_id: customer,
         accountBalance,
-        accountCurrency,
+        currency,
         ledgerBalance,
-        ledgerCurrency,
         _id,
       } = createAccount;
 
@@ -36,11 +35,10 @@ export class AccountsService {
         })}`,
         type,
         accountBalance,
-        accountCurrency,
+        currency,
         ledgerBalance,
-        ledgerCurrency,
         _id,
-        user,
+        auth,
         customer,
       });
       await createdAccount.save();

@@ -2,7 +2,7 @@ import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateCustomerDto {
   @IsNotEmpty()
-  user_id: string;
+  auth_id: string;
 
   @IsNotEmpty()
   name: string;

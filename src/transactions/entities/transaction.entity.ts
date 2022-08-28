@@ -1,25 +1,25 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
-import { User } from '../../users/entities/user.entity';
-import { Customer } from '../../customers/entities/customer.entity';
-import { Account } from '../../account/entities/account.entity';
+import { AuthUche } from '../../auth/entities/auth.entity';
+import { CustomerUche } from '../../customers/entities/customer.entity';
+import { AccountUche } from '../../account/entities/account.entity';
 
-export type TransactionDocument = Transaction & Document;
+export type TransactionDocument = TransactionUche & Document;
 
 @Schema({ timestamps: true })
-export class Transaction {
+export class TransactionUche {
   @Prop({ required: true })
   code: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
-  user: User;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'AuthUche' })
+  auth: AuthUche;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Customer' })
-  customer: Customer;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'CustomerUche' })
+  customer: CustomerUche;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Account' })
-  account: Account;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'AccountUche' })
+  account: AccountUche;
 
   @Prop({ required: true })
   type: string;
@@ -43,4 +43,4 @@ export class Transaction {
   sender: string;
 }
 
-export const TransactionSchema = SchemaFactory.createForClass(Transaction);
+export const TransactionSchema = SchemaFactory.createForClass(TransactionUche);

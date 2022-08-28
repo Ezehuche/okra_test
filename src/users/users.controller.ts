@@ -12,7 +12,7 @@ import {
   Request,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiExcludeEndpoint, ApiOperation, ApiResponse } from '@nestjs/swagger';
 // import { AuthGuard } from '@nestjs/passport';
 import { PrincipalGuard } from './guards/principal.guard';
 
@@ -20,9 +20,8 @@ import { PrincipalGuard } from './guards/principal.guard';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @UseGuards(PrincipalGuard)
   @Get('')
-  @ApiBearerAuth('defaultBearerAuth')
+  @ApiExcludeEndpoint()
   @ApiOperation({
     summary: 'Get all users',
   })

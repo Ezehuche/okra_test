@@ -22,9 +22,7 @@ import { PageRequest } from '../page/page.request';
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
-  @UseGuards(PrincipalGuard)
   @Get('account/:accountId')
-  @ApiBearerAuth('defaultBearerAuth')
   @ApiQuery({
     name: 'pageNo',
     required: false,
@@ -52,9 +50,7 @@ export class TransactionsController {
     return this.transactionsService.findByAccount(account_id, pageRequest);
   }
 
-  @UseGuards(PrincipalGuard)
   @Get('customer/:customerId')
-  @ApiBearerAuth('defaultBearerAuth')
   @ApiQuery({
     name: 'pageNo',
     required: false,
@@ -82,9 +78,7 @@ export class TransactionsController {
     return this.transactionsService.findByCustomer(customer_id, pageRequest);
   }
 
-  @UseGuards(PrincipalGuard)
   @Get(':id')
-  @ApiBearerAuth('defaultBearerAuth')
   @ApiOperation({
     summary: 'Get a transaction by Id',
   })
@@ -97,9 +91,7 @@ export class TransactionsController {
     return this.transactionsService.findOne(id);
   }
 
-  @UseGuards(PrincipalGuard)
   @Get('')
-  @ApiBearerAuth('defaultBearerAuth')
   @ApiQuery({
     name: 'pageNo',
     required: false,
