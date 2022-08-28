@@ -12,6 +12,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiHeader,
   ApiOperation,
@@ -23,9 +24,8 @@ import { AuthsService } from './auth.service';
 import { AccountsService } from 'src/account/accounts.service';
 import { CustomersService } from 'src/customers/customers.service';
 import { TransactionsService } from 'src/transactions/transactions.service';
-import { UpdateAuthDto } from './dto/update-auth.dto';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { auth } from 'src/scrapers/okraBank/auth';
+import { AuthDto } from './dto/create-auth.dto';
+import { okraBank } from 'src/scrapers';
 
 @Controller('auths')
 export class AuthsController {
@@ -36,30 +36,24 @@ export class AuthsController {
     private readonly transactionsService: TransactionsService,
   ) {}
 
-  // @UseGuards(PrincipalGuard)
-  //   @ApiOperation({
-  //     summary: 'Start Auth Process',
-  //     description: 'Start Auth Process',
-  //   })
-  //   @ApiBody({
-  //     description: 'Request Body',
-  //     type: CreateAuthDto,
-  //   })
-  //   @ApiResponse({
-  //     status: 200,
-  //   })
-  //   @ApiHeader({
-  //     name: 'x-access-token',
-  //     description: 'Super Admin JWT',
-  //     required: true,
-  //   })
   @UseGuards(PrincipalGuard)
   @Post('getStarted')
+  @ApiBearerAuth('defaultBearerAuth')
+  @ApiBody({
+    type: AuthDto,
+  })
+  @ApiOperation({
+    summary: 'Enter your Okra bank credentials to retrieve your account',
+  })
+  @ApiResponse({
+    status: 200,
+    isArray: true,
+  })
   @UsePipes(new ValidationPipe())
   // @UsePipes(new ValidationPipe())
   async createAuth(@Request() req) {
     // console.log(req);
-    const scrapedData = await auth(
+    const scrapedData = await okraBank(
       req.body.email,
       req.body.password,
       req.body.otp,
@@ -94,15 +88,5 @@ export class AuthsController {
       message: 'Data was successfully saved',
     };
     // return this.authsService.create(payload);
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authsService.findOne(+id);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authsService.remove(+id);
   }
 }

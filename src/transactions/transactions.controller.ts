@@ -2,11 +2,7 @@ import {
   Controller,
   Get,
   Query,
-  Post,
-  Body,
-  Patch,
   Param,
-  Request,
   UseGuards,
   UsePipes,
   ValidationPipe,
@@ -19,7 +15,6 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { TransactionsService } from './transactions.service';
-import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { PrincipalGuard } from 'src/users/guards/principal.guard';
 import { PageRequest } from 'src/page/page.request';
 
@@ -29,11 +24,11 @@ export class TransactionsController {
 
   @UseGuards(PrincipalGuard)
   @Get('account/:accountId')
-  @ApiBearerAuth('access-token')
+  @ApiBearerAuth('defaultBearerAuth')
   @ApiQuery({
     name: 'pageNo',
     required: false,
-    description: 'page index default 1',
+    description: 'page limit default 1',
   })
   @ApiQuery({
     name: 'pageSize',
@@ -59,11 +54,11 @@ export class TransactionsController {
 
   @UseGuards(PrincipalGuard)
   @Get('customer/:customerId')
-  @ApiBearerAuth('access-token')
+  @ApiBearerAuth('defaultBearerAuth')
   @ApiQuery({
     name: 'pageNo',
     required: false,
-    description: 'page index default 1',
+    description: 'page limit default 1',
   })
   @ApiQuery({
     name: 'pageSize',
@@ -89,7 +84,7 @@ export class TransactionsController {
 
   @UseGuards(PrincipalGuard)
   @Get(':id')
-  @ApiBearerAuth('access-token')
+  @ApiBearerAuth('defaultBearerAuth')
   @ApiOperation({
     summary: 'Get a transaction by Id',
   })
@@ -104,11 +99,11 @@ export class TransactionsController {
 
   @UseGuards(PrincipalGuard)
   @Get('')
-  @ApiBearerAuth('access-token')
+  @ApiBearerAuth('defaultBearerAuth')
   @ApiQuery({
     name: 'pageNo',
     required: false,
-    description: 'page index default 1',
+    description: 'page limit default 1',
   })
   @ApiQuery({
     name: 'pageSize',

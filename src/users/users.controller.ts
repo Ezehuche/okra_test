@@ -12,8 +12,7 @@ import {
   Request,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { loginUserDto } from './dto/update-user.dto';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
 // import { AuthGuard } from '@nestjs/passport';
 import { PrincipalGuard } from './guards/principal.guard';
 
@@ -22,14 +21,15 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @UseGuards(PrincipalGuard)
-  @Post()
-  @UsePipes(new ValidationPipe())
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
-  }
-
-  @UseGuards(PrincipalGuard)
   @Get('')
+  @ApiBearerAuth('defaultBearerAuth')
+  @ApiOperation({
+    summary: 'Get all users',
+  })
+  @ApiResponse({
+    status: 200,
+    isArray: true,
+  })
   findAll(@Request() req) {
     console.log({ req: req.user });
     return this.usersService.findAll();

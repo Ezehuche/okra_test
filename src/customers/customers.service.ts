@@ -44,21 +44,23 @@ export class CustomersService {
       await createdCustomer.save();
 
       return createdCustomer;
-
-      //   return this.utils.sendObjectResponse('customer created', {
-      //     createdCustomer,
-      //   });
     } catch (error) {
       console.log({ error });
       throw new NotFoundException(error.message, error.errors);
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} customer`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} customer`;
+  async find() {
+    try {
+      const customer = await this.customerModel.find().exec();
+      return {
+        status: true,
+        message: `Successfully fetched customer`,
+        data: customer,
+      };
+    } catch (error) {
+      console.log({ error });
+      throw new NotFoundException(error.message, error.errors);
+    }
   }
 }

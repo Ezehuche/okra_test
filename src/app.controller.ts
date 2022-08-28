@@ -7,24 +7,32 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { AppService } from './app.service';
-import { CreateUserDto } from './users/dto/create-user.dto';
+import { CreateUserDto, UserDto } from './users/dto/create-user.dto';
 import { loginUserDto } from './users/dto/update-user.dto';
+import { ApiBody, ApiExcludeEndpoint } from '@nestjs/swagger';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
+  @ApiExcludeEndpoint()
   getHello(): string {
     return this.appService.getHello();
   }
   @Post('register')
+  @ApiBody({
+    type: UserDto,
+  })
   @UsePipes(new ValidationPipe())
   create(@Body() createUserDto: CreateUserDto) {
     return this.appService.register(createUserDto);
   }
 
   @Post('login')
+  @ApiBody({
+    type: loginUserDto,
+  })
   login(@Body() loginUser: loginUserDto) {
     return this.appService.login(loginUser);
   }

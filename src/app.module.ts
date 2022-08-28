@@ -43,6 +43,7 @@ import { TransactionsModule } from 'src/transactions/transactions.module';
     AuthsModule,
     CustomersModule,
     TransactionsModule,
+    AccountsModule,
   ],
   controllers: [AppController],
   providers: [

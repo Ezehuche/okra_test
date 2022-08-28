@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { CreateAccountDto } from './dto/create-account.dto';
 import { Account, AccountDocument } from './entities/account.entity';
 import * as randomstring from 'randomstring';
+import { PageRequest } from 'src/page/page.request';
 
 @Injectable()
 export class AccountsService {
@@ -45,21 +46,59 @@ export class AccountsService {
       await createdAccount.save();
 
       return createdAccount;
-
-      //   return this.utils.sendObjectResponse('customer created', {
-      //     createdCustomer,
-      //   });
     } catch (error) {
       console.log({ error });
       throw new NotFoundException(error.message, error.errors);
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} customer`;
+  async findByCustomer(customer_id: string, pageRequest: PageRequest) {
+    try {
+      const account = await this.accountModel
+        .find({ customer: customer_id })
+        .limit(pageRequest.getLimit())
+        .skip(pageRequest.getOffset())
+        .exec();
+      return {
+        status: true,
+        message: `Customers account fetched successfully`,
+        data: account,
+      };
+    } catch (error) {
+      console.log({ error });
+      throw new NotFoundException(error.message, error.errors);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} customer`;
+  async findOne(id: string) {
+    try {
+      const account = await this.accountModel.findOne({ id }).exec();
+      return {
+        status: true,
+        message: `Successfully fetched the account`,
+        data: account,
+      };
+    } catch (error) {
+      console.log({ error });
+      throw new NotFoundException(error.message, error.errors);
+    }
+  }
+
+  async findAll(pageRequest: PageRequest) {
+    try {
+      const account = await this.accountModel
+        .find()
+        .limit(pageRequest.getLimit())
+        .skip(pageRequest.getOffset())
+        .exec();
+      return {
+        status: true,
+        message: `Successfully fetched all accounts`,
+        data: account,
+      };
+    } catch (error) {
+      console.log({ error });
+      throw new NotFoundException(error.message, error.errors);
+    }
   }
 }

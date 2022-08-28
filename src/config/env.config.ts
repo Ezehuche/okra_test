@@ -9,3 +9,4 @@ export const MONGO_PASSWORD = env.get('MONGO_PASSWORD').asString();
 export const MONGO_HOST = env.get('MONGO_HOST').asString();
 export const JWT_SECRET = env.get('JWT_SECRET').asString();
 export const ENVIRONMENT = env.get('ENVIRONMENT').asString();
+export const ACCESSTOKEN = env.get('ACCESSTOKEN').asString();

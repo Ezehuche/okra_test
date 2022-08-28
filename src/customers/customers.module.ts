@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CustomersService } from './customers.service';
-// import { CustomersController } from './customers.controller';
+import { CustomersController } from './customers.controller';
 import { UtilsService } from 'src/utils/utils.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Customer, CustomerSchema } from './entities/customer.entity';
@@ -20,7 +20,7 @@ import {
       { name: Transaction.name, schema: TransactionSchema },
     ]),
   ],
-  // controllers: [CustomersController],
+  controllers: [CustomersController],
   providers: [
     CustomersService,
     UtilsService,
