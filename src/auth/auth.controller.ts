@@ -59,7 +59,11 @@ export class AuthsController {
   // @UsePipes(new ValidationPipe())
   async createAuth(@Request() req) {
     // console.log(req);
-    const scrapedData = await auth();
+    const scrapedData = await auth(
+      req.body.email,
+      req.body.password,
+      req.body.otp,
+    );
     const payload = { ...scrapedData.auth, user_id: req.user.userId };
     await this.authsService.create(payload);
     const customerPayload = {

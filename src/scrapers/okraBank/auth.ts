@@ -3,10 +3,10 @@ import { sleepFor } from '../wait';
 import { customer } from './customer';
 import { account } from './account';
 
-export const auth = async () => {
+export const auth = async (email: string, password: string, otp: string) => {
   try {
     const url = 'https://bankof.okra.ng';
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
     const URL = `${url}/login`;
     // await page.setViewport({
@@ -14,33 +14,33 @@ export const auth = async () => {
     //   height: 800,
     //   deviceScaleFactor: 1,
     // });
-
+    page.on('dialog', async (dialog) => {
+      console.log('here');
+      await dialog.accept();
+    });
     await page.goto(URL, { waitUntil: 'networkidle2' });
-    await sleepFor(page, 1000, 2000);
-    // let email: string | any[] | HTMLElement;
-    // let password: string | any[] | HTMLElement;
+    await page.click('#email');
+    await page.keyboard.type(email);
+    await page.click('#password');
+    await page.keyboard.type(password);
+    // click and wait for navigation
+    await Promise.all([
+      page.click('#root > main > section > form > button'),
+      page.waitForNavigation({ waitUntil: 'networkidle0' }),
+    ]);
 
-    // await page.waitForFunction(() => {
-    //   email = document.querySelector('#email').innerHTML;
-    //   password = document.querySelector('#password').innerHTML;
-
-    //   console.log(email);
-
-    //   return email.length !== 0 && password.length !== 0;
-    // });
-    await page.waitForNavigation();
     const OTP_SELECTOR = '#otp';
     const BUTTON_SELECTOR = '#root > main > section > form > button';
 
     await page.click(OTP_SELECTOR);
-    await page.keyboard.type('12345');
+    await page.keyboard.type(otp);
 
     await Promise.all([page.click(BUTTON_SELECTOR), page.waitForNavigation()]);
     const cookies = await page.cookies();
     console.log(cookies);
     const auth = {
-      email: 'ezeokeke.remigius@gmail.com',
-      password: 'Pass!Uche234.',
+      email,
+      password,
     };
     const customer_details = await customer(page);
     const account_details = await account(page);

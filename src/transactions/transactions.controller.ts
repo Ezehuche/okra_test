@@ -1,0 +1,133 @@
+import {
+  Controller,
+  Get,
+  Query,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Request,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { TransactionsService } from './transactions.service';
+import { CreateTransactionDto } from './dto/create-transaction.dto';
+import { PrincipalGuard } from 'src/users/guards/principal.guard';
+import { PageRequest } from 'src/page/page.request';
+
+@Controller('transactions')
+export class TransactionsController {
+  constructor(private readonly transactionsService: TransactionsService) {}
+
+  @UseGuards(PrincipalGuard)
+  @Get('account/:accountId')
+  @ApiBearerAuth('access-token')
+  @ApiQuery({
+    name: 'pageNo',
+    required: false,
+    description: 'page index default 1',
+  })
+  @ApiQuery({
+    name: 'pageSize',
+    required: false,
+    description: 'page size default 15',
+  })
+  @ApiOperation({
+    summary: 'Get All transactions by account API',
+  })
+  @ApiResponse({
+    status: 200,
+    isArray: true,
+  })
+  @UsePipes(new ValidationPipe())
+  findByAccount(
+    @Param('accountId') account_id: string,
+    @Query('pageNo') pageNo: number,
+    @Query('pageSize') pageSize: number,
+  ) {
+    const pageRequest: PageRequest = new PageRequest(pageNo, pageSize);
+    return this.transactionsService.findByAccount(account_id, pageRequest);
+  }
+
+  @UseGuards(PrincipalGuard)
+  @Get('customer/:customerId')
+  @ApiBearerAuth('access-token')
+  @ApiQuery({
+    name: 'pageNo',
+    required: false,
+    description: 'page index default 1',
+  })
+  @ApiQuery({
+    name: 'pageSize',
+    required: false,
+    description: 'page size default 15',
+  })
+  @ApiOperation({
+    summary: 'Get All transactions by customer API',
+  })
+  @ApiResponse({
+    status: 200,
+    isArray: true,
+  })
+  @UsePipes(new ValidationPipe())
+  findByCustomer(
+    @Param('customerId') customer_id: string,
+    @Query('pageNo') pageNo: number,
+    @Query('pageSize') pageSize: number,
+  ) {
+    const pageRequest: PageRequest = new PageRequest(pageNo, pageSize);
+    return this.transactionsService.findByCustomer(customer_id, pageRequest);
+  }
+
+  @UseGuards(PrincipalGuard)
+  @Get(':id')
+  @ApiBearerAuth('access-token')
+  @ApiOperation({
+    summary: 'Get a transaction by Id',
+  })
+  @ApiResponse({
+    status: 200,
+    isArray: true,
+  })
+  @UsePipes(new ValidationPipe())
+  findOne(@Param('id') id: string) {
+    return this.transactionsService.findOne(id);
+  }
+
+  @UseGuards(PrincipalGuard)
+  @Get('')
+  @ApiBearerAuth('access-token')
+  @ApiQuery({
+    name: 'pageNo',
+    required: false,
+    description: 'page index default 1',
+  })
+  @ApiQuery({
+    name: 'pageSize',
+    required: false,
+    description: 'page size default 15',
+  })
+  @ApiOperation({
+    summary: 'Fetch all transactions',
+  })
+  @ApiResponse({
+    status: 200,
+    isArray: true,
+  })
+  @UsePipes(new ValidationPipe())
+  findAll(
+    @Query('pageNo') pageNo: number,
+    @Query('pageSize') pageSize: number,
+  ) {
+    const pageRequest: PageRequest = new PageRequest(pageNo, pageSize);
+    return this.transactionsService.findAll(pageRequest);
+  }
+}

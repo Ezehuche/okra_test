@@ -29,7 +29,7 @@ import {
     JwtModule.register({
       secret: JWT_SECRET,
       signOptions: {
-        expiresIn: '1d', //30min
+        expiresIn: '365d', //30min
       },
     }),
   ],

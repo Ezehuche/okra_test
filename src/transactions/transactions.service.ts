@@ -7,6 +7,7 @@ import {
   TransactionDocument,
 } from './entities/transaction.entity';
 import * as randomstring from 'randomstring';
+import { PageRequest } from 'src/page/page.request';
 
 @Injectable()
 export class TransactionsService {
@@ -59,11 +60,71 @@ export class TransactionsService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} customer`;
+  async findByAccount(account_id: string, pageRequest: PageRequest) {
+    try {
+      const transaction = await this.transactionModel
+        .find({ account: account_id })
+        .limit(pageRequest.getLimit())
+        .skip(pageRequest.getOffset())
+        .exec();
+      return {
+        status: true,
+        message: `Transactions fetched successfully for ${account_id}`,
+        data: transaction,
+      };
+    } catch (error) {
+      console.log({ error });
+      throw new NotFoundException(error.message, error.errors);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} customer`;
+  async findByCustomer(customer_id: string, pageRequest: PageRequest) {
+    try {
+      const transaction = await this.transactionModel
+        .find({ customer: customer_id })
+        .limit(pageRequest.getLimit())
+        .skip(pageRequest.getOffset())
+        .exec();
+      return {
+        status: true,
+        message: `Transactions fetched successfully for ${customer_id}`,
+        data: transaction,
+      };
+    } catch (error) {
+      console.log({ error });
+      throw new NotFoundException(error.message, error.errors);
+    }
+  }
+
+  async findOne(id: string) {
+    try {
+      const transaction = await this.transactionModel.findOne({ id }).exec();
+      return {
+        status: true,
+        message: `Successfully fetched the transaction`,
+        data: transaction,
+      };
+    } catch (error) {
+      console.log({ error });
+      throw new NotFoundException(error.message, error.errors);
+    }
+  }
+
+  async findAll(pageRequest: PageRequest) {
+    try {
+      const transaction = await this.transactionModel
+        .find()
+        .limit(pageRequest.getLimit())
+        .skip(pageRequest.getOffset())
+        .exec();
+      return {
+        status: true,
+        message: `Successfully fetched all transactions`,
+        data: transaction,
+      };
+    } catch (error) {
+      console.log({ error });
+      throw new NotFoundException(error.message, error.errors);
+    }
   }
 }

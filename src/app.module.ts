@@ -21,6 +21,7 @@ import {
   Transaction,
   TransactionSchema,
 } from 'src/transactions/entities/transaction.entity';
+import { TransactionsModule } from 'src/transactions/transactions.module';
 
 @Module({
   imports: [
@@ -35,13 +36,13 @@ import {
     JwtModule.register({
       secret: JWT_SECRET,
       signOptions: {
-        expiresIn: '1d', //30min
+        expiresIn: '365d', //30min
       },
     }),
     UtilsModule,
     AuthsModule,
     CustomersModule,
-    // CustomersModule,
+    TransactionsModule,
   ],
   controllers: [AppController],
   providers: [

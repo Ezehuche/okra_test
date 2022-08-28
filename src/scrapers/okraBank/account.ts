@@ -208,27 +208,6 @@ export const account = async (page: puppeteer.Page) => {
           console.log(JSON.stringify(transObj));
           transactionArr.push(...transObj);
         }
-        // await page.goBack();
-        // await page.waitForTimeout(6000);
-        // await Promise.all([
-        //   page.click(
-        //     '#root > main > section > section:nth-child(3) > div:nth-child(2) > a',
-        //   ),
-        //   page.waitForNavigation(),
-        // ]);
-        // const accPages = await getNumPages(page);
-        // const testaccPages = 3;
-        // const accObj = await getTransactions(page);
-        // console.log(JSON.stringify(accObj));
-        // for (let k = 1; k <= testaccPages; k++) {
-        //   const nextSelector = `#root > main > section > div:nth-child(4) > div > button.py-2.px-4.text-sm.font-medium.text-white.bg-gray-800.rounded-r.border-0.border-l.border-gray-700.hover\\:bg-gray-900.dark\\:bg-gray-800.dark\\:border-gray-700.dark\\:text-gray-400.dark\\:hover\\:bg-gray-700.dark\\:hover\\:text-white`;
-        //   await Promise.all([
-        //     page.click(nextSelector),
-        //     page.waitForTimeout(4000),
-        //   ]);
-        //   const transObj = await getTransactions(page);
-        //   console.log(JSON.stringify(transObj));
-        // }
       }
     }
     return { accountArr, transactionArr };
