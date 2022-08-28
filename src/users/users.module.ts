@@ -9,12 +9,21 @@ import { JWT_SECRET } from '../config/env.config';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 import { UtilsService } from 'src/utils/utils.service';
+import { AccountsService } from 'src/account/accounts.service';
+import { TransactionsService } from 'src/transactions/transactions.service';
+import { Account, AccountSchema } from 'src/account/entities/account.entity';
+import {
+  Transaction,
+  TransactionSchema,
+} from 'src/transactions/entities/transaction.entity';
 
 @Module({
   imports: [
     // eslint-disable-next-line prettier/prettier
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema },
+      { name: Account.name, schema: AccountSchema },
+      { name: Transaction.name, schema: TransactionSchema },
     ]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
@@ -25,6 +34,13 @@ import { UtilsService } from 'src/utils/utils.service';
     }),
   ],
   controllers: [UsersController],
-  providers: [UsersService, AuthService, JwtStrategy, UtilsService],
+  providers: [
+    UsersService,
+    AuthService,
+    JwtStrategy,
+    UtilsService,
+    AccountsService,
+    TransactionsService,
+  ],
 })
 export class UsersModule {}

@@ -1,13 +1,16 @@
-import { IsOptional } from 'class-validator';
+import { IsOptional, IsNotEmpty } from 'class-validator';
 // import { ApiHideProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsString, IsObject } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class CreateAuthDto {
-  @IsOptional()
-  @IsObject()
-  cookies: object;
+  @IsNotEmpty()
+  user_id: string;
 
   @IsOptional()
   @IsString()
-  _id: string;
+  email: string;
+
+  @IsOptional()
+  @IsString()
+  password: string;
 }

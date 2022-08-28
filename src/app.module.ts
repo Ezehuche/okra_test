@@ -9,15 +9,29 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './users/auth.service';
 import { User, UserSchema } from './users/entities/user.entity';
 import { UtilsModule } from './utils/utils.module';
+import { AccountsModule } from './account/accounts.module';
+import { AccountsService } from './account/accounts.service';
+import { CustomersModule } from './customers/customers.module';
+import { CustomersService } from './customers/customers.service';
 import { UtilsService } from './utils/utils.service';
 import { AuthsModule } from './auth/auth.module';
+import { TransactionsService } from 'src/transactions/transactions.service';
+import { Account, AccountSchema } from 'src/account/entities/account.entity';
+import {
+  Transaction,
+  TransactionSchema,
+} from 'src/transactions/entities/transaction.entity';
 
 @Module({
   imports: [
     // PassportModule,
     UsersModule,
     MongooseModule.forRoot(MONGO_URL),
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([
+      { name: User.name, schema: UserSchema },
+      { name: Account.name, schema: AccountSchema },
+      { name: Transaction.name, schema: TransactionSchema },
+    ]),
     JwtModule.register({
       secret: JWT_SECRET,
       signOptions: {
@@ -26,8 +40,17 @@ import { AuthsModule } from './auth/auth.module';
     }),
     UtilsModule,
     AuthsModule,
+    CustomersModule,
+    // CustomersModule,
   ],
   controllers: [AppController],
-  providers: [AppService, AuthService, UtilsService],
+  providers: [
+    AppService,
+    AuthService,
+    UtilsService,
+    AccountsService,
+    TransactionsService,
+    // CustomersService,
+  ],
 })
 export class AppModule {}

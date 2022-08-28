@@ -30,8 +30,8 @@ export class Transaction {
   @Prop({ required: true })
   description: string;
 
-  @Prop({ required: true })
-  amount: mongoose.Decimal128;
+  @Prop({ type: mongoose.Schema.Types.Decimal128, required: true })
+  amount: string;
 
   @Prop()
   currency: string;

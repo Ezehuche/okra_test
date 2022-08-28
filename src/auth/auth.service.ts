@@ -16,11 +16,11 @@ export class AuthsService {
   ) {}
   async create(createAuth: CreateAuthDto) {
     try {
-      // const { email, user_id: user, password } = createAuth;
-      const { cookies } = createAuth;
+      const { email, user_id: user, password } = createAuth;
+      // const { cookies } = createAuth;
 
-      const auth = await this.authModel.findOne({ cookies }).exec();
-      if (auth) throw new NotFoundException('Cookie already exists');
+      // const auth = await this.authModel.findOne({ user }).exec();
+      // if (auth) throw new NotFoundException('Cookie already exists');
 
       const createdAuth = new this.authModel({
         code: `auth_${randomstring.generate({
@@ -28,13 +28,16 @@ export class AuthsService {
           capitalization: 'lowercase',
           charset: 'alphanumeric',
         })}`,
-        cookies,
+        email,
+        password,
+        user,
       });
       await createdAuth.save();
+      return createdAuth;
 
-      return this.utils.sendObjectResponse('auth created', {
-        createdAuth,
-      });
+      // return this.utils.sendObjectResponse('auth created', {
+      //   createdAuth,
+      // });
     } catch (error) {
       console.log({ error });
       throw new NotFoundException(error.message, error.errors);

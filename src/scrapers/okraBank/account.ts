@@ -1,4 +1,5 @@
 import puppeteer from 'puppeteer';
+import mongoose from 'mongoose';
 import * as randomstring from 'randomstring';
 import { FormatterService } from 'src/formatter/formatter.service';
 import { sleepFor } from '../wait';
@@ -22,7 +23,10 @@ const getNumPages = async (page: puppeteer.Page) => {
   return numPages;
 };
 
-const getTransactions = async (page: puppeteer.Page, account_id: string) => {
+const getTransactions = async (
+  page: puppeteer.Page,
+  account_id: mongoose.Types.ObjectId,
+) => {
   const LENGTH_SELECTOR_CLASS = 'dark:border-gray-700';
   const listLength = await page.evaluate((sel) => {
     return document.getElementsByClassName(sel).length;
@@ -150,11 +154,13 @@ export const account = async (page: puppeteer.Page) => {
           return document.querySelector(sel).getAttribute('href');
         }, buttonSelector);
 
-        const _id = `acc_${randomstring.generate({
-          length: 16,
-          capitalization: 'lowercase',
-          charset: 'alphanumeric',
-        })}`;
+        const _id = new mongoose.Types.ObjectId(
+          `id_${randomstring.generate({
+            length: 9,
+            capitalization: 'lowercase',
+            charset: 'alphanumeric',
+          })}`,
+        );
 
         console.log(
           type,

@@ -5,7 +5,6 @@ import { UtilsService } from 'src/utils/utils.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { Customer, CustomerDocument } from './entities/customer.entity';
 import * as randomstring from 'randomstring';
-import { updateCustomerDto } from './dto/update-customer.dto';
 
 @Injectable()
 export class CustomersService {
@@ -24,10 +23,10 @@ export class CustomersService {
         bvn,
       } = createCustomer;
 
-      const customer = await this.customerModel
-        .findOne({ email: email.toLowerCase(), user })
-        .exec();
-      if (customer) throw new NotFoundException('User already exists');
+      // const customer = await this.customerModel
+      //   .findOne({ email: email.toLowerCase(), user })
+      //   .exec();
+      // if (customer) throw new NotFoundException('User already exists');
 
       const createdCustomer = new this.customerModel({
         code: `cus_${randomstring.generate({
@@ -38,6 +37,7 @@ export class CustomersService {
         email,
         name,
         address,
+        phone_number,
         bvn,
         user,
       });

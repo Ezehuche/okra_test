@@ -20,14 +20,14 @@ export class Account {
   @Prop({ required: true })
   type: string;
 
-  @Prop()
-  accountBalance: mongoose.Decimal128;
+  @Prop({ type: mongoose.Schema.Types.Decimal128 })
+  accountBalance: string;
 
   @Prop({ required: true })
   accountCurrency: string;
 
-  @Prop({ required: true })
-  ledgerBalance: mongoose.Decimal128;
+  @Prop({ type: mongoose.Schema.Types.Decimal128, required: true })
+  ledgerBalance: string;
 
   @Prop()
   ledgerCurrency: string;

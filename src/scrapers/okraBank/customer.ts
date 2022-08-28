@@ -29,7 +29,7 @@ export const customer = async (page: puppeteer.Page) => {
       name: new FormatterService().removeStr('Welcome back', name),
       address: new FormatterService().removeStr('Address:', address),
       bvn: new FormatterService().removeStr('BVN:', bvn),
-      phone: new FormatterService().removeStr('Phone:', phone),
+      phone_number: new FormatterService().removeStr('Phone:', phone),
       email: new FormatterService().removeStr('Email:', email),
     };
 

@@ -48,7 +48,7 @@ export const auth = async () => {
     console.log(customer_details);
     console.log(account_details);
 
-    return auth;
+    return { auth, customer_details, account_details };
   } catch (err) {
     console.log(err);
   }

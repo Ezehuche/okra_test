@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUtilDto } from './dto/create-util.dto';
 import { UpdateUtilDto } from './dto/update-util.dto';
+import { CustomersService } from 'src/customers/customers.service';
+import { AccountsService } from 'src/account/accounts.service';
+import { TransactionsService } from 'src/transactions/transactions.service';
 
 type authType = {
   email: string;
@@ -8,6 +11,7 @@ type authType = {
 };
 
 type customerType = {
+  user_id: string;
   name: string;
   address: string;
   bvn: string;
@@ -16,6 +20,9 @@ type customerType = {
 };
 
 type accountType = {
+  user_id: string;
+  customer_id: string;
+  _id: string;
   type: string;
   accountBalance: string;
   accountCurrency: string;
@@ -26,7 +33,7 @@ type accountType = {
 type transactionType = {
   account_id: string;
   type: string;
-  clearedDate: string;
+  clearedDate: Date;
   description: string;
   amount: string;
   currency: string;
@@ -37,14 +44,24 @@ type transactionType = {
 export interface ScrapeLogs {
   auth: authType;
   customer: customerType;
-  accounts: accountType[];
-  transactions: transactionType[];
+  accounts: accountType;
+  transactions: transactionType;
 }
 
 @Injectable()
 export class UtilsService {
-  createScrapeData(scrapeLog: ScrapeLogs) {
+  constructor(
+    private accounts: AccountsService,
+    // private customers: CustomersService,
+    private transactions: TransactionsService,
+  ) {}
+  async createScrapeData(scrapeLog: ScrapeLogs) {
     try {
+      // const customer = await this.customers.create(scrapeLog.customer);
+      const account = await this.accounts.create(scrapeLog.accounts);
+      // if (customer) {
+      //   const account = await this.accounts.create(scrapeLog.accounts);
+      // }
       console.log(scrapeLog);
     } catch (err) {
       console.log(err);
@@ -56,6 +73,10 @@ export class UtilsService {
       .split(/ |\B(?=[A-Z])/)
       .map((word) => word.toLowerCase())
       .join('_');
+  }
+
+  getFloat(value: any) {
+    return value && value['$numberDecimal'] ? value['$numberDecimal'] : 0;
   }
 
   findAll() {

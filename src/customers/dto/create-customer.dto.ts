@@ -18,8 +18,4 @@ export class CreateCustomerDto {
 
   @IsOptional()
   phone_number: string;
-
-  @IsOptional()
-  @IsString()
-  _id: string;
 }
