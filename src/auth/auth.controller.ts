@@ -1,6 +1,8 @@
 import {
   Controller,
   Post,
+  Param,
+  Get,
   Request,
   UsePipes,
   ValidationPipe,
@@ -32,7 +34,7 @@ export class AuthsController {
     type: AuthDto,
   })
   @ApiOperation({
-    summary: 'Enter your Okra bank credentials to retrieve your account',
+    summary: 'Enter your Okra bank credentials to get all your bank statements',
   })
   @ApiResponse({
     status: 200,
@@ -77,5 +79,18 @@ export class AuthsController {
       message: 'Data was successfully saved',
     };
     // return this.authsService.create(payload);
+  }
+
+  @Get(':customerId')
+  @ApiOperation({
+    summary: 'Get Customer Authentication Details',
+  })
+  @ApiResponse({
+    status: 200,
+    isArray: true,
+  })
+  @UsePipes(new ValidationPipe())
+  findByCustomer(@Param('customerId') customer_id: string) {
+    return this.authsService.findByCustomer(customer_id);
   }
 }

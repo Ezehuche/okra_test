@@ -26,7 +26,7 @@ import { PageRequest } from '../page/page.request';
 export class AccountsController {
   constructor(private readonly accountsService: AccountsService) {}
 
-  @Get('customer/:customerId')
+  @Get(':customerId')
   @ApiQuery({
     name: 'pageNo',
     required: false,

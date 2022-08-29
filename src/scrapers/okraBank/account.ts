@@ -196,7 +196,7 @@ export const account = async (page: puppeteer.Page) => {
           page.waitForNavigation(),
         ]);
         const numPages = await getNumPages(page);
-        const testPages = 3;
+        const testPages = 2;
         const transObj = await getTransactions(page, _id);
         console.log(JSON.stringify(transObj));
         transactionArr.push(...transObj);

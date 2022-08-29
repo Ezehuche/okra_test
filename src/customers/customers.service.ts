@@ -64,4 +64,14 @@ export class CustomersService {
       throw new NotFoundException(error.message, error.errors);
     }
   }
+
+  async findById(id: string) {
+    try {
+      const customer = await this.customerModel.findById(id).exec();
+      return customer;
+    } catch (error) {
+      console.log({ error });
+      throw new NotFoundException(error.message, error.errors);
+    }
+  }
 }

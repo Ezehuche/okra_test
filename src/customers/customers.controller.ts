@@ -5,17 +5,16 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CustomersService } from './customers.service';
-import { PrincipalGuard } from '../users/guards/principal.guard';
 
-@Controller('customer')
+@Controller('customers')
 export class CustomersController {
   constructor(private readonly customersService: CustomersService) {}
 
   @Get('')
   @ApiOperation({
-    summary: 'Get the customer data',
+    summary: 'Get all customers data',
   })
   @ApiResponse({
     status: 200,

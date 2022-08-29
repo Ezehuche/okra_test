@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import * as CryptoJS from 'crypto-js';
 import { JWT_SECRET } from '../config/env.config';
 import { UtilsService } from '../utils/utils.service';
+import { CustomersService } from '../customers/customers.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 // import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { AuthUche, AuthDocument } from './entities/auth.entity';
@@ -14,6 +15,7 @@ export class AuthsService {
   constructor(
     @InjectModel(AuthUche.name) private authModel: Model<AuthDocument>,
     private utils: UtilsService,
+    private customersService: CustomersService,
   ) {}
   async create(createAuth: CreateAuthDto) {
     try {
@@ -22,9 +24,7 @@ export class AuthsService {
 
       // const auth = await this.authModel.findOne({ user }).exec();
       // if (auth) throw new NotFoundException('Cookie already exists');
-      const passwordHash = encodeURIComponent(
-        CryptoJS.AES.encrypt(JSON.stringify(password), JWT_SECRET).toString(),
-      );
+      const passwordHash = CryptoJS.AES.encrypt(password, JWT_SECRET);
 
       const createdAuth = new this.authModel({
         code: `auth_${randomstring.generate({
@@ -48,11 +48,21 @@ export class AuthsService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} customer`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} customer`;
+  async findByCustomer(customer_id: string) {
+    try {
+      console.log(customer_id);
+      const customer = await this.customersService.findById(customer_id);
+      const auth = await this.authModel.findById(customer.auth).exec();
+      const decrypted = CryptoJS.AES.decrypt(auth.password, JWT_SECRET);
+      auth.password = decrypted.toString(CryptoJS.enc.Utf8);
+      return {
+        status: true,
+        message: `Customers authentication detail`,
+        data: auth,
+      };
+    } catch (error) {
+      console.log({ error });
+      throw new NotFoundException(error.message, error.errors);
+    }
   }
 }
