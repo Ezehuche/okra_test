@@ -23,7 +23,7 @@ go to http://localhost:3000/api-docs to view the API Reference documentation
 
 ## API Guide
 - Scrape data from `DOM`<br>
-**NOTE**: Before you scrape the `DOM` you must be a registered customer's `email`, `password` and `otp`
+**NOTE**: Before you scrape the `DOM` you must register and use your registered customer's `email`, `password` and `otp`
 ```
 curl -X POST -H "Content-Type: application/json" -d '{"email":"user@example.com","password":"password", "otp": "12345"}'http://localhost:3000/auth/getStarted
 
