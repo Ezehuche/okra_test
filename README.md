@@ -21,6 +21,7 @@ the server will be available at http://localhost:3000
 go to http://localhost:3000/api-docs to view the API Reference documentation
 ```
 
+## API Guide
 - Scrape data from `DOM`<br>
 **NOTE**: Before you scrape the `DOM` you must be a registered customer's `email`, `password` and `otp`
 ```
