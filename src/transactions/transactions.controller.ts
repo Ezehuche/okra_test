@@ -22,7 +22,7 @@ import { PageRequest } from '../page/page.request';
 export class TransactionsController {
   constructor(private readonly transactionsService: TransactionsService) {}
 
-  @Get(':accountId')
+  @Get('acc/:accountId')
   @ApiQuery({
     name: 'pageNo',
     required: false,
@@ -50,7 +50,7 @@ export class TransactionsController {
     return this.transactionsService.findByAccount(account_id, pageRequest);
   }
 
-  @Get(':customerId')
+  @Get('cus/:customerId')
   @ApiQuery({
     name: 'pageNo',
     required: false,

@@ -50,33 +50,40 @@ export class AuthsController {
       req.body.otp,
     );
     const payload = { ...scrapedData.auth, otp: req.body.otp };
-    const authObj = await this.authsService.create(payload);
+    const authentication = await this.authsService.create(payload);
     const customerPayload = {
       ...scrapedData.customer_details,
-      auth_id: authObj._id,
+      auth_id: authentication._id,
     };
-    const customerObj = await this.customersService.create(customerPayload);
+    const customer = await this.customersService.create(customerPayload);
     const acctArr = scrapedData.account_details.accountArr;
-    acctArr.map(async (acct) => {
+    const accounts = [];
+    const acctPromise = acctArr.map(async (acct) => {
       const acctPayload = {
         ...acct,
-        auth_id: authObj._id,
-        customer_id: customerObj._id,
+        auth_id: authentication._id,
+        customer_id: customer._id,
       };
-      await this.accountsService.create(acctPayload);
+      const createAccount = await this.accountsService.create(acctPayload);
+      accounts.push(createAccount);
     });
+    await Promise.all(acctPromise);
     const transArr = scrapedData.account_details.transactionArr;
-    transArr.map(async (trans) => {
+    const transactions = [];
+    const transPromise = transArr.map(async (trans) => {
       const transPayload = {
         ...trans,
-        auth_id: authObj._id,
-        customer_id: customerObj._id,
+        auth_id: authentication._id,
+        customer_id: customer._id,
       };
-      await this.transactionsService.create(transPayload);
+      const createdTrans = await this.transactionsService.create(transPayload);
+      transactions.push(createdTrans);
     });
+    await Promise.all(transPromise);
     return {
       status: true,
       message: 'Data was successfully saved',
+      data: { authentication, customer, accounts, transactions },
     };
     // return this.authsService.create(payload);
   }

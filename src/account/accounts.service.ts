@@ -28,7 +28,7 @@ export class AccountsService {
       //   throw new NotFoundException('Account already exist for this user');
 
       const createdAccount = new this.accountModel({
-        code: `cus_${randomstring.generate({
+        code: `acc_${randomstring.generate({
           length: 6,
           capitalization: 'lowercase',
           charset: 'alphanumeric',
@@ -59,7 +59,7 @@ export class AccountsService {
         .exec();
       return {
         status: true,
-        message: `Customers account fetched successfully`,
+        message: `Customer accounts fetched successfully`,
         data: account,
       };
     } catch (error) {
